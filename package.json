@@ -1,0 +1,35 @@
+{
+  "name": "piwik-tracker",
+  "version": "0.1.0",
+  "description": "A wrapper for the Piwik tracking HTTP API",
+  "keywords": [
+    "piwik",
+    "analytics",
+    "tracking"
+  ],
+  "homepage": "https://github.com/fhemberger/piwik-tracker",
+  "bugs": "https://github.com/fhemberger/piwik-tracker/issues",
+  "author": {
+    "name": "Frederic Hemberger",
+    "url": "https://github.com/fhemberger"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fhemberger/piwik-tracker.git"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "devDependencies": {
+    "mocha": "~1.16.2",
+    "sinon-chai": "~2.4.0",
+    "chai": "~1.8.1",
+    "sinon": "~1.7.3",
+    "nock": "~0.27.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "license": "MIT"
+}
