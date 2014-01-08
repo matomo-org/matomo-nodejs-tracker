@@ -16,10 +16,10 @@ Then, use it in your project:
 var PiwikTracker = require('piwik-tracker');
 
 // Initialize with your site ID and Piwik URL
-piwik = new PiwikTracker(1, 'http://mywebsite.com/piwik.php');
+var piwik = new PiwikTracker(1, 'http://mywebsite.com/piwik.php');
 
 // Optional: Respond to tracking errors
-piwik.on('error', function(err){
+piwik.on('error', function(err) {
   console.log('error tracking request: ', err)
 })
 
