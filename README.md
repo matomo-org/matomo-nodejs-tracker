@@ -30,11 +30,11 @@ piwik.track('http://example.com/track/this/url');
 // … or provide further options:
 piwik.track({
   url: 'http://example.com/track/this/url',
-  actionName: 'This will be shown in your dashboard',
+  action_name: 'This will be shown in your dashboard',
   ua: 'Node.js v0.10.24',
-  cvar: {
+  cvar: JSON.stringify({
     '1': ['custom variable name', 'custom variable value']
-  }
+  })
 });
 ```
 
