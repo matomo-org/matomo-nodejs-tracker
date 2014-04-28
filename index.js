@@ -8,12 +8,17 @@
 
 'use strict';
 
-var http = require('http');
-var util = require('util');
-var events = require('events');
-var qs = require('querystring');
+var events = require('events'),
+    util   = require('util'),
+    qs     = require('querystring'),
+    agent;
 
 
+/**
+ * @constructor
+ * @param {Number} siteId     Id of the site you want to track
+ * @param {String} trackerUrl URL of your Piwik instance
+ */
 function PiwikTracker(siteId, trackerUrl) {
   if (!(this instanceof PiwikTracker)) { return new PiwikTracker(siteId, trackerUrl); }
   events.EventEmitter.call(this);
@@ -28,12 +33,16 @@ function PiwikTracker(siteId, trackerUrl) {
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
+
+  // Use either HTTPS or HTTP agent according to Piwik tracker URL
+  agent = require( /^https:/.test(trackerUrl) ? 'https' : 'http' );
 }
 util.inherits(PiwikTracker, events.EventEmitter);
 
 
 /**
- * [track description]
+ * Executes the call to the Piwik tracking API
+ *
  * For a list of tracking option parameters see
  * http://developer.piwik.org/api-reference/tracking-api
  *
@@ -55,7 +64,7 @@ PiwikTracker.prototype.track = function track(options) {
   if (!options.url) { throw new Error('URL to be tracked must be specified.'); }
 
   var requestUrl = this.trackerUrl + '?' + qs.stringify(options);
-  var req = http.get(requestUrl, function(res) {
+  var req = agent.get(requestUrl, function(res) {
     // Check HTTP statuscode for 200 and 30x
     if ( !/^(200|30[12478])$/.test(res.statusCode) ) {
       if (hasErrorListeners) { self.emit('error', res.statusCode); }

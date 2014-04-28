@@ -1,11 +1,12 @@
 /*jshint -W068 */
 'use strict';
 
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var http = require('http');
-var nock = require('nock');
+var chai      = require('chai'),
+    sinon     = require('sinon'),
+    sinonChai = require('sinon-chai'),
+    http      = require('http'),
+    https     = require('https'),
+    nock      = require('nock');
 
 chai.should();
 chai.use(sinonChai);
@@ -38,7 +39,7 @@ describe('PiwikTracker()', function() {
 describe('#track()', function() {
   var httpMock, httpSpy, piwik;
 
-  before(function() {
+  beforeEach(function() {
     piwik = new PiwikTracker(1, 'http://example.com/piwik.php');
 
     httpMock = nock('http://example.com')
@@ -47,7 +48,7 @@ describe('#track()', function() {
     httpSpy = sinon.spy(http, 'get');
   });
 
-  after(function() {
+  afterEach(function() {
     piwik = null;
     nock.restore();
     httpSpy.restore();
@@ -77,9 +78,35 @@ describe('#track()', function() {
     httpMock.reply(404);
 
     piwik.on('error', function(param) {
-      param.should.equal(404);
+      param.should.match(/^(404|getaddrinfo ENOTFOUND)/);
       done();
     });
     piwik.track({ url: 'http://mywebsite.com/' });
+  });
+});
+
+
+describe('#track() - HTTPS support', function() {
+  var httpsMock, httpsSpy, piwik;
+
+  before(function() {
+    piwik = new PiwikTracker(1, 'https://example.com/piwik.php');
+
+    httpsMock = nock('https://example.com')
+      .filteringPath(function() { return '/piwik.php'; })
+      .get('/piwik.php');
+    httpsSpy = sinon.spy(https, 'get');
+  });
+
+  after(function() {
+    piwik = null;
+    nock.restore();
+    httpsSpy.restore();
+  });
+
+  it('should use HTTPS to access Piwik, when stated in the URL', function() {
+    httpsMock.reply(200);
+    piwik.track('http://mywebsite.com/');
+    httpsSpy.should.have.been.calledWith('https://example.com/piwik.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
   });
 });
