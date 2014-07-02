@@ -46,7 +46,7 @@ That's it. For a complete list of options, see [Piwik's Tracking HTTP API Refere
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
 [npm-url]: https://npmjs.org/package/piwik-tracker
-[npm-image]: https://badge.fury.io/js/piwik-tracker.png
+[npm-image]: http://img.shields.io/npm/v/piwik-tracker.svg
 
 [travis-url]: http://travis-ci.org/fhemberger/piwik-tracker
-[travis-image]: https://secure.travis-ci.org/fhemberger/piwik-tracker.png?branch=master
+[travis-image]: http://img.shields.io/travis/fhemberger/piwik-tracker.svg
