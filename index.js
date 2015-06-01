@@ -32,7 +32,7 @@ function PiwikTracker(siteId, trackerUrl) {
   }
 
   if (trackerUrl.toString().indexOf("piwik.php")== -1){
-    throw new Error('A tracker URL must be provided, e.g. http://example.com/piwik.php');
+    throw new Error('A tracker URL must contain piwik.php in the URL, e.g. http://example.com/piwik.php');
   }
 
   this.siteId = siteId;
