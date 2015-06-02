@@ -27,6 +27,10 @@ describe('PiwikTracker()', function() {
     (function(){ new PiwikTracker(1); }).should.throw(/tracker/);
   });
 
+  it('should thow if no trackerUrl is not valid (no piwik.php endpoint)', function() {
+    (function(){ new PiwikTracker(1,'http://example.com/index.php'); }).should.throw(/tracker/);
+  });
+
   it('should have properties siteId/trackerUrl', function() {
     var piwik = new PiwikTracker(1, 'http://example.com/piwik.php');
     piwik.siteId.should.equal(1);
