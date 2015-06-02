@@ -31,7 +31,7 @@ function PiwikTracker(siteId, trackerUrl) {
     throw new Error('A tracker URL must be provided, e.g. http://example.com/piwik.php');
   }
 
-  if (trackerUrl.toString().indexOf("piwik.php")== -1){
+  if (trackerUrl.toString().indexOf('piwik.php') === -1) {
     throw new Error('A tracker URL must contain piwik.php in the URL, e.g. http://example.com/piwik.php');
   }
 
@@ -56,7 +56,7 @@ PiwikTracker.prototype.track = function track(options) {
   var self = this;
   var hasErrorListeners = this.listeners('error').length;
 
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { url: options };
   }
 
