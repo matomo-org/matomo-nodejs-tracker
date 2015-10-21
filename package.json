@@ -24,8 +24,8 @@
   "devDependencies": {
     "mocha": "2.3.3",
     "sinon-chai": "2.8.0",
-    "chai": "3.4.0",
-    "sinon": "1.17.1",
+    "chai": "3.3.0",
+    "sinon": "1.17.2",
     "nock": "2.15.0"
   },
   "engines": {
