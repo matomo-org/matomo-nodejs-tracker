@@ -22,11 +22,11 @@
     "test": "mocha --reporter spec"
   },
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "sinon-chai": "^2.8.0",
-    "chai": "^3.4.1",
-    "sinon": "^1.17.2",
-    "nock": "^7.0.2"
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "nock": "^7.7.2",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
   },
   "engines": {
     "node": ">=0.8.0"
