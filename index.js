@@ -8,10 +8,12 @@
 
 'use strict';
 
-var events = require('events'),
-    util   = require('util'),
-    qs     = require('querystring'),
-    agent;
+const assert = require('assert');
+const events = require('events');
+const util   = require('util');
+const qs     = require('querystring');
+
+let agent;
 
 
 /**
@@ -19,27 +21,19 @@ var events = require('events'),
  * @param {Number} siteId     Id of the site you want to track
  * @param {String} trackerUrl URL of your Piwik instance
  */
-function PiwikTracker(siteId, trackerUrl) {
+function PiwikTracker (siteId, trackerUrl) {
   if (!(this instanceof PiwikTracker)) { return new PiwikTracker(siteId, trackerUrl); }
   events.EventEmitter.call(this);
 
-  if (!siteId || isNaN(+siteId)) {
-    throw new Error('siteId must be provided.');
-  }
-
-  if (!trackerUrl || typeof trackerUrl !== 'string') {
-    throw new Error('A tracker URL must be provided, e.g. http://example.com/piwik.php');
-  }
-
-  if (trackerUrl.toString().indexOf('piwik.php') === -1) {
-    throw new Error('A tracker URL must contain piwik.php in the URL, e.g. http://example.com/piwik.php');
-  }
+  assert.ok(siteId && !isNaN(siteId), 'Piwik siteId required.');
+  assert.ok(trackerUrl && typeof trackerUrl == 'string', 'Piwik tracker URL required, e.g. http://example.com/piwik.php')
+  assert.ok(trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "piwik.php"')
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
 
   // Use either HTTPS or HTTP agent according to Piwik tracker URL
-  agent = require( /^https:/.test(trackerUrl) ? 'https' : 'http' );
+  agent = require( trackerUrl.startsWith('https') ? 'https' : 'http' );
 }
 util.inherits(PiwikTracker, events.EventEmitter);
 
@@ -52,8 +46,7 @@ util.inherits(PiwikTracker, events.EventEmitter);
  *
  * @param {(String|Object)} URL to track or options (must contain URL as well)
  */
-PiwikTracker.prototype.track = function track(options) {
-  var self = this;
+PiwikTracker.prototype.track = function track (options) {
   var hasErrorListeners = this.listeners('error').length;
 
   if (typeof options === 'string') {
@@ -65,19 +58,17 @@ PiwikTracker.prototype.track = function track(options) {
   options.idsite = this.siteId;
   options.rec = 1;
 
-  if (!options.url) { throw new Error('URL to be tracked must be specified.'); }
+  assert.ok(options.url, 'URL to be tracked must be specified.');
 
   var requestUrl = this.trackerUrl + '?' + qs.stringify(options);
-  var req = agent.get(requestUrl, function(res) {
+  var req = agent.get(requestUrl, (res) => {
     // Check HTTP statuscode for 200 and 30x
     if ( !/^(200|30[12478])$/.test(res.statusCode) ) {
-      if (hasErrorListeners) { self.emit('error', res.statusCode); }
+      if (hasErrorListeners) { this.emit('error', res.statusCode); }
     }
   });
 
-  req.on('error', function(e) {
-    if (hasErrorListeners) { self.emit('error', e.message); }
-  });
+  req.on('error', (err) => hasErrorListeners && this.emit('error', err.message));
 
   req.end();
 };

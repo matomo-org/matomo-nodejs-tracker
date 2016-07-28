@@ -1,6 +1,6 @@
 {
   "name": "piwik-tracker",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "A wrapper for the Piwik tracking HTTP API",
   "keywords": [
     "piwik",
@@ -13,7 +13,9 @@
     "name": "Frederic Hemberger",
     "url": "https://github.com/fhemberger"
   },
-  "main": "./index.js",
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/fhemberger/piwik-tracker.git"
@@ -25,11 +27,11 @@
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "nock": "^8.0.0",
-    "sinon": "^1.17.4",
+    "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=4.2.0"
   },
   "license": "MIT"
 }
