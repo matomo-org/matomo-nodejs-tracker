@@ -15,19 +15,26 @@ chai.use(sinonChai);
 var PiwikTracker = require('../index.js');
 describe('PiwikTracker()', () => {
 
-  it('should thow if no parameters provided', () => {
+  it('should throw if no parameters provided', () => {
     (() => new PiwikTracker()).should.throw(/siteId/);
   });
 
-  it('should thow if no siteId is provided', () => {
+  it('should throw if no siteId is provided', () => {
     (() => new PiwikTracker(null)).should.throw(/siteId/);
   });
+    
+  it('should throw if siteId provided is neither a number nor a string', () => {
+    (() => new PiwikTracker({ foo: 'bar' })).should.throw(/siteId/);
+    (() => new PiwikTracker([1,2,3])).should.throw(/siteId/);
+    (() => new PiwikTracker(true)).should.throw(/siteId/);
+    (() => new PiwikTracker(() => { return true; })).should.throw(/siteId/);
+  }); 
 
-  it('should thow if no trackerUrl is provided', () => {
+  it('should throw if no trackerUrl is provided', () => {
     (() => new PiwikTracker(1)).should.throw(/tracker/);
   });
 
-  it('should thow if no trackerUrl is not valid (no piwik.php endpoint)', () => {
+  it('should throw if no trackerUrl is not valid (no piwik.php endpoint)', () => {
     (() => new PiwikTracker(1,'http://example.com/index.php')).should.throw(/tracker/);
   });
 
