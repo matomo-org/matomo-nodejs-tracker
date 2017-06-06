@@ -1,6 +1,6 @@
 {
   "name": "piwik-tracker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A wrapper for the Piwik tracking HTTP API",
   "keywords": [
     "piwik",
@@ -24,7 +24,7 @@
     "test": "mocha --reporter spec"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
+    "chai": "^3.5.0",
     "mocha": "^3.4.2",
     "nock": "^9.0.13",
     "sinon": "^2.3.2",
