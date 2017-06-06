@@ -1,6 +1,6 @@
 {
   "name": "piwik-tracker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A wrapper for the Piwik tracking HTTP API",
   "keywords": [
     "piwik",
