@@ -22,13 +22,15 @@ describe('PiwikTracker()', () => {
   it('should throw if no siteId is provided', () => {
     (() => new PiwikTracker(null)).should.throw(/siteId/);
   });
-    
+
   it('should throw if siteId provided is neither a number nor a string', () => {
     (() => new PiwikTracker({ foo: 'bar' })).should.throw(/siteId/);
     (() => new PiwikTracker([1,2,3])).should.throw(/siteId/);
     (() => new PiwikTracker(true)).should.throw(/siteId/);
     (() => new PiwikTracker(() => { return true; })).should.throw(/siteId/);
-  }); 
+    (() => new PiwikTracker(1, 'http://example.com/piwik.php')).should.not.throw();
+    (() => new PiwikTracker('siteId', 'http://example.com/piwik.php')).should.not.throw();
+  });
 
   it('should throw if no trackerUrl is provided', () => {
     (() => new PiwikTracker(1)).should.throw(/tracker/);
