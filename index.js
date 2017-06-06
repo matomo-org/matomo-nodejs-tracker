@@ -25,7 +25,7 @@ function PiwikTracker (siteId, trackerUrl) {
   if (!(this instanceof PiwikTracker)) { return new PiwikTracker(siteId, trackerUrl); }
   events.EventEmitter.call(this);
 
-  assert.ok(siteId && !isNaN(siteId), 'Piwik siteId required.');
+  assert.ok(siteId && (typeof siteId == 'number' || typeof siteId == 'string'), 'Piwik siteId required.');
   assert.ok(trackerUrl && typeof trackerUrl == 'string', 'Piwik tracker URL required, e.g. http://example.com/piwik.php')
   assert.ok(trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "piwik.php"')
 
