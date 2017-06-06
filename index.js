@@ -61,14 +61,15 @@ PiwikTracker.prototype.track = function track (options) {
   assert.ok(options.url, 'URL to be tracked must be specified.');
 
   var requestUrl = this.trackerUrl + '?' + qs.stringify(options);
-  var req = agent.get(requestUrl, (res) => {
+  var self = this;
+  var req = agent.get(requestUrl, function(res) {
     // Check HTTP statuscode for 200 and 30x
     if ( !/^(200|30[12478])$/.test(res.statusCode) ) {
-      if (hasErrorListeners) { this.emit('error', res.statusCode); }
+      if (hasErrorListeners) { self.emit('error', res.statusCode); }
     }
   });
 
-  req.on('error', (err) => hasErrorListeners && this.emit('error', err.message));
+  req.on('error', function(err) { hasErrorListeners && self.emit('error', err.message) });
 
   req.end();
 };
