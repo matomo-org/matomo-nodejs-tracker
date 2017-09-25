@@ -8,11 +8,10 @@
 
 'use strict';
 
-const assert = require('assert');
-const events = require('events');
-const util   = require('util');
-const qs     = require('querystring');
-
+var assert = require('assert');
+var events = require('events');
+var util   = require('util');
+var qs     = require('querystring');
 
 /**
  * @constructor
@@ -31,7 +30,7 @@ function PiwikTracker (siteId, trackerUrl) {
   this.trackerUrl = trackerUrl;
 
   // Use either HTTPS or HTTP agent according to Piwik tracker URL
-  this.agent = require( trackerUrl.startsWith('https') ? 'https' : 'http' );
+  this.agent = require( /^https/.test(trackerUrl) ? 'https' : 'http' );
 }
 util.inherits(PiwikTracker, events.EventEmitter);
 
