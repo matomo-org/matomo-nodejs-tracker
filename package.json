@@ -21,7 +21,9 @@
     "url": "git://github.com/fhemberger/piwik-tracker.git"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "npm run mocha && npm run eslint",
+    "mocha": "mocha --reporter spec",
+    "eslint": "eslint index.js test/index.test.js"
   },
   "devDependencies": {
     "chai": "^4.1.1",
