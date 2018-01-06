@@ -42,7 +42,7 @@ util.inherits(PiwikTracker, events.EventEmitter);
  * For a list of tracking option parameters see
  * http://developer.piwik.org/api-reference/tracking-api
  *
- * @param {(String|Object)} URL to track or options (must contain URL as well)
+ * @param {(String|Object)} options URL to track or options (must contain URL as well)
  */
 PiwikTracker.prototype.track = function track (options) {
   var hasErrorListeners = this.listeners('error').length;
