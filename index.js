@@ -82,4 +82,4 @@ PiwikTracker.prototype.track = function track (options) {
 };
 
 
-// export default PiwikTracker;
+module.exports = PiwikTracker;
