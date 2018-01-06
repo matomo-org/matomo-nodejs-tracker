@@ -17,5 +17,8 @@
     "no-unused-vars": 1,
     "space-before-function-paren": [1, "always"],
     "semi": "warn"
+  },
+  "parserOptions": {
+    "sourceType": "module"
   }
 }

@@ -12,7 +12,7 @@ chai.should();
 chai.use(sinonChai);
 
 
-var PiwikTracker = require('../index.js');
+var PiwikTracker = require('../dist/piwik-tracker.cjs');
 describe('PiwikTracker()', () => {
 
   it('should throw if no parameters provided', () => {

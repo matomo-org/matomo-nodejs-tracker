@@ -14,27 +14,39 @@
     "url": "https://github.com/fhemberger"
   },
   "files": [
-    "index.js"
+    "dist"
   ],
+  "main": "dist/piwik-tracker.cjs.js",
+  "module": "dist/piwik-tracker.esm.js",
+  "browser": "dist/piwik-tracker.umd.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/fhemberger/piwik-tracker.git"
   },
   "scripts": {
-    "test": "npm run mocha && npm run eslint",
+    "test": "npm run build && npm run mocha && npm run eslint",
     "mocha": "mocha --reporter spec",
-    "eslint": "eslint index.js test/index.test.js"
+    "eslint": "eslint index.js test/index.test.js rollup.config.js",
+    "build": "rollup -c rollup.config.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.36",
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.36",
     "chai": "^4.1.2",
     "eslint": "^4.14.0",
     "mocha": "^3.5.3",
     "nock": "^9.1.5",
+    "rollup": "^0.53.3",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
     "sinon": "^3.3.0",
     "sinon-chai": "^2.14.0"
   },
   "engines": {
     "node": ">=4.2.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "string.prototype.startswith": "^0.2.0"
+  }
 }
