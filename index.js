@@ -10,8 +10,8 @@
 
 const assert = require('assert');
 const events = require('events');
-const util   = require('util');
-const qs     = require('querystring');
+const util = require('util');
+const qs = require('querystring');
 
 
 /**
@@ -20,7 +20,9 @@ const qs     = require('querystring');
  * @param {String} trackerUrl URL of your Piwik instance
  */
 function PiwikTracker (siteId, trackerUrl) {
-  if (!(this instanceof PiwikTracker)) { return new PiwikTracker(siteId, trackerUrl); }
+  if (!(this instanceof PiwikTracker)) {
+    return new PiwikTracker(siteId, trackerUrl);
+  }
   events.EventEmitter.call(this);
 
   assert.ok(siteId && (typeof siteId == 'number' || typeof siteId == 'string'), 'Piwik siteId required.');
@@ -31,8 +33,9 @@ function PiwikTracker (siteId, trackerUrl) {
   this.trackerUrl = trackerUrl;
 
   // Use either HTTPS or HTTP agent according to Piwik tracker URL
-  this.agent = require( trackerUrl.startsWith('https') ? 'https' : 'http' );
+  this.agent = require(trackerUrl.startsWith('https') ? 'https' : 'http');
 }
+
 util.inherits(PiwikTracker, events.EventEmitter);
 
 
@@ -48,7 +51,9 @@ PiwikTracker.prototype.track = function track (options) {
   var hasErrorListeners = this.listeners('error').length;
 
   if (typeof options === 'string') {
-    options = { url: options };
+    options = {
+      url: options
+    };
   }
 
   // Set mandatory options
@@ -62,12 +67,16 @@ PiwikTracker.prototype.track = function track (options) {
   var self = this;
   var req = this.agent.get(requestUrl, function (res) {
     // Check HTTP statuscode for 200 and 30x
-    if ( !/^(200|30[12478])$/.test(res.statusCode) ) {
-      if (hasErrorListeners) { self.emit('error', res.statusCode); }
+    if (!/^(200|30[12478])$/.test(res.statusCode)) {
+      if (hasErrorListeners) {
+        self.emit('error', res.statusCode);
+      }
     }
   });
 
-  req.on('error', function (err) { hasErrorListeners && self.emit('error', err.message) });
+  req.on('error', function (err) {
+    hasErrorListeners && self.emit('error', err.message)
+  });
 
   req.end();
 };
