@@ -48,5 +48,5 @@ That's it. For a complete list of options, see [Piwik's Tracking HTTP API Refere
 [npm-url]: https://npmjs.org/package/piwik-tracker
 [npm-image]: http://img.shields.io/npm/v/piwik-tracker.svg
 
-[travis-url]: http://travis-ci.org/fhemberger/piwik-tracker
-[travis-image]: http://img.shields.io/travis/fhemberger/piwik-tracker.svg
+[travis-url]: https://travis-ci.org/piwik/piwik-tracker
+[travis-image]: https://img.shields.io/travis/piwik/piwik-tracker.svg
