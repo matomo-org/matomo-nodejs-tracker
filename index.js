@@ -1,8 +1,8 @@
 /**
- * A Node.js wrapper for the Piwik (http://piwik.org) tracking HTTP API
- * https://github.com/fhemberger/piwik-tracker
+ * A Node.js wrapper for the Matomo (http://matomo.org) tracking HTTP API
+ * https://github.com/matomo-org/matomo-tracker
  *
- * @author  Frederic Hemberger
+ * @author  Frederic Hemberger, Matomo Team
  * @license MIT
  */
 
@@ -17,37 +17,37 @@ const qs = require('querystring');
 /**
  * @constructor
  * @param {Number} siteId     Id of the site you want to track
- * @param {String} trackerUrl URL of your Piwik instance
+ * @param {String} trackerUrl URL of your Matomo instance
  */
-function PiwikTracker (siteId, trackerUrl) {
-  if (!(this instanceof PiwikTracker)) {
-    return new PiwikTracker(siteId, trackerUrl);
+function MatomoTracker (siteId, trackerUrl) {
+  if (!(this instanceof MatomoTracker)) {
+    return new MatomoTracker(siteId, trackerUrl);
   }
   events.EventEmitter.call(this);
 
-  assert.ok(siteId && (typeof siteId === 'number' || typeof siteId === 'string'), 'Piwik siteId required.');
-  assert.ok(trackerUrl && typeof trackerUrl === 'string', 'Piwik tracker URL required, e.g. http://example.com/piwik.php');
-  assert.ok(trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "piwik.php"');
+  assert.ok(siteId && (typeof siteId === 'number' || typeof siteId === 'string'), 'Matomo siteId required.');
+  assert.ok(trackerUrl && typeof trackerUrl === 'string', 'Matomo tracker URL required, e.g. http://example.com/matomo.php');
+  assert.ok(trackerUrl.endsWith('matomo.php'), 'A tracker URL must end with "matomo.php"');
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
 
-  // Use either HTTPS or HTTP agent according to Piwik tracker URL
+  // Use either HTTPS or HTTP agent according to Matomo tracker URL
   this.agent = require(trackerUrl.startsWith('https') ? 'https' : 'http');
 }
 
-util.inherits(PiwikTracker, events.EventEmitter);
+util.inherits(MatomoTracker, events.EventEmitter);
 
 
 /**
- * Executes the call to the Piwik tracking API
+ * Executes the call to the Matomo tracking API
  *
  * For a list of tracking option parameters see
- * http://developer.piwik.org/api-reference/tracking-api
+ * https://developer.matomo.org/api-reference/tracking-api
  *
  * @param {(String|Object)} options URL to track or options (must contain URL as well)
  */
-PiwikTracker.prototype.track = function track (options) {
+MatomoTracker.prototype.track = function track (options) {
   var hasErrorListeners = this.listeners('error').length;
 
   if (typeof options === 'string') {
@@ -82,4 +82,4 @@ PiwikTracker.prototype.track = function track (options) {
 };
 
 
-module.exports = PiwikTracker;
+module.exports = MatomoTracker;

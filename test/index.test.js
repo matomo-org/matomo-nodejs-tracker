@@ -12,114 +12,114 @@ chai.should();
 chai.use(sinonChai);
 
 
-var PiwikTracker = require('../index.js');
-describe('PiwikTracker()', () => {
+var MatomoTracker = require('../index.js');
+describe('MatomoTracker()', () => {
 
   it('should throw if no parameters provided', () => {
-    (() => new PiwikTracker()).should.throw(/siteId/);
+    (() => new MatomoTracker()).should.throw(/siteId/);
   });
 
   it('should throw if no siteId is provided', () => {
-    (() => new PiwikTracker(null)).should.throw(/siteId/);
+    (() => new MatomoTracker(null)).should.throw(/siteId/);
   });
 
   it('should throw if siteId provided is neither a number nor a string', () => {
-    (() => new PiwikTracker({ foo: 'bar' })).should.throw(/siteId/);
-    (() => new PiwikTracker([1,2,3])).should.throw(/siteId/);
-    (() => new PiwikTracker(true)).should.throw(/siteId/);
-    (() => new PiwikTracker(() => { return true; })).should.throw(/siteId/);
-    (() => new PiwikTracker(1, 'http://example.com/piwik.php')).should.not.throw();
-    (() => new PiwikTracker('siteId', 'http://example.com/piwik.php')).should.not.throw();
+    (() => new MatomoTracker({ foo: 'bar' })).should.throw(/siteId/);
+    (() => new MatomoTracker([1,2,3])).should.throw(/siteId/);
+    (() => new MatomoTracker(true)).should.throw(/siteId/);
+    (() => new MatomoTracker(() => { return true; })).should.throw(/siteId/);
+    (() => new MatomoTracker(1, 'http://example.com/matomo.php')).should.not.throw();
+    (() => new MatomoTracker('siteId', 'http://example.com/matomo.php')).should.not.throw();
   });
 
   it('should throw if no trackerUrl is provided', () => {
-    (() => new PiwikTracker(1)).should.throw(/tracker/);
+    (() => new MatomoTracker(1)).should.throw(/tracker/);
   });
 
-  it('should throw if no trackerUrl is not valid (no piwik.php endpoint)', () => {
-    (() => new PiwikTracker(1,'http://example.com/index.php')).should.throw(/tracker/);
+  it('should throw if no trackerUrl is not valid (no matomo.php endpoint)', () => {
+    (() => new MatomoTracker(1,'http://example.com/index.php')).should.throw(/tracker/);
   });
 
   it('should have properties siteId/trackerUrl', () => {
-    var piwik = new PiwikTracker(1, 'http://example.com/piwik.php');
-    piwik.siteId.should.equal(1);
-    piwik.trackerUrl.should.equal('http://example.com/piwik.php');
+    var matomo = new MatomoTracker(1, 'http://example.com/matomo.php');
+    matomo.siteId.should.equal(1);
+    matomo.trackerUrl.should.equal('http://example.com/matomo.php');
   });
 
 });
 
 
 describe('#track()', () => {
-  var httpMock, httpSpy, piwik;
+  var httpMock, httpSpy, matomo;
 
   beforeEach(() => {
-    piwik = new PiwikTracker(1, 'http://example.com/piwik.php');
+    matomo = new MatomoTracker(1, 'http://example.com/matomo.php');
 
     httpMock = nock('http://example.com')
-      .filteringPath(() => '/piwik.php')
-      .get('/piwik.php');
+      .filteringPath(() => '/matomo.php')
+      .get('/matomo.php');
     httpSpy = sinon.spy(http, 'get');
   });
 
   afterEach(() => {
-    piwik = null;
+    matomo = null;
     nock.restore();
     httpSpy.restore();
   });
 
   it('should throw without parameter', () => {
-    (() => piwik.track()).should.throw(/URL/);
+    (() => matomo.track()).should.throw(/URL/);
   });
 
   it('should accept a url as string', () => {
     httpMock.reply(200);
-    piwik.track('http://mywebsite.com/');
-    httpSpy.should.have.been.calledWith('http://example.com/piwik.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
+    matomo.track('http://mywebsite.com/');
+    httpSpy.should.have.been.calledWith('http://example.com/matomo.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
   });
 
   it('should accept an parameter object', () => {
     httpMock.reply(200);
-    piwik.track({ url: 'http://mywebsite.com/' });
-    httpSpy.should.have.been.calledWith('http://example.com/piwik.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
+    matomo.track({ url: 'http://mywebsite.com/' });
+    httpSpy.should.have.been.calledWith('http://example.com/matomo.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
   });
 
   it('should throw without options.url', () => {
-    (() => piwik.track({})).should.throw(/URL/);
+    (() => matomo.track({})).should.throw(/URL/);
   });
 
   it('should emit an error if HTTP response status is not 200/30x', (done) => {
     httpMock.reply(404);
 
-    piwik.on('error', (param) => {
+    matomo.on('error', (param) => {
       param.should.match(/^(404|getaddrinfo ENOTFOUND)/);
       done();
     });
-    piwik.track({ url: 'http://mywebsite.com/' });
+    matomo.track({ url: 'http://mywebsite.com/' });
   });
 });
 
 
 describe('#track() - HTTPS support', () => {
-  var httpsMock, httpsSpy, piwik;
+  var httpsMock, httpsSpy, matomo;
 
   before(() => {
-    piwik = new PiwikTracker(1, 'https://example.com/piwik.php');
+    matomo = new MatomoTracker(1, 'https://example.com/matomo.php');
 
     httpsMock = nock('https://example.com')
-      .filteringPath(() => '/piwik.php')
-      .get('/piwik.php');
+      .filteringPath(() => '/matomo.php')
+      .get('/matomo.php');
     httpsSpy = sinon.spy(https, 'get');
   });
 
   after(() => {
-    piwik = null;
+    matomo = null;
     nock.restore();
     httpsSpy.restore();
   });
 
-  it('should use HTTPS to access Piwik, when stated in the URL', () => {
+  it('should use HTTPS to access Matomo, when stated in the URL', () => {
     httpsMock.reply(200);
-    piwik.track('http://mywebsite.com/');
-    httpsSpy.should.have.been.calledWith('https://example.com/piwik.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
+    matomo.track('http://mywebsite.com/');
+    httpsSpy.should.have.been.calledWith('https://example.com/matomo.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
   });
 });
