@@ -46,7 +46,7 @@ That's it. For a complete list of options, see [Matomo's Tracking HTTP API Refer
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
 [npm-url]: https://npmjs.org/package/matomo-tracker
-[npm-image]: http://img.shields.io/npm/v/matomo-tracker.svg
+[npm-image]: https://img.shields.io/npm/v/matomo-tracker.svg
 
 [travis-url]: https://travis-ci.org/matomo-org/matomo-nodejs-tracker
 [travis-image]: https://img.shields.io/travis/matomo-org/matomo-nodejs-tracker.svg
