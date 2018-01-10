@@ -20,8 +20,8 @@ var matomo = new MatomoTracker(1, 'http://mywebsite.com/matomo.php');
 
 // Optional: Respond to tracking errors
 matomo.on('error', function(err) {
-  console.log('error tracking request: ', err)
-})
+  console.log('error tracking request: ', err);
+});
 
 // Track a request URL:
 // Either as a simple string …
