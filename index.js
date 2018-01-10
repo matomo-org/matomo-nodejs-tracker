@@ -27,7 +27,7 @@ function MatomoTracker (siteId, trackerUrl) {
 
   assert.ok(siteId && (typeof siteId === 'number' || typeof siteId === 'string'), 'Matomo siteId required.');
   assert.ok(trackerUrl && typeof trackerUrl === 'string', 'Matomo tracker URL required, e.g. http://example.com/matomo.php');
-  assert.ok(trackerUrl.endsWith('matomo.php'), 'A tracker URL must end with "matomo.php"');
+  assert.ok(trackerUrl.endsWith('matomo.php') || trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "matomo.php" or "piwik.php"');
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
