@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/matomo-org/matomo-tracker.git"
+    "url": "git://github.com/matomo-org/matomo-nodejs-tracker.git"
   },
   "scripts": {
     "test": "npm run mocha && npm run eslint",
