@@ -1,24 +1,25 @@
 {
-  "name": "piwik-tracker",
+  "name": "matomo-tracker",
   "version": "1.1.2",
-  "description": "A wrapper for the Piwik tracking HTTP API",
+  "description": "A wrapper for the Matomo tracking HTTP API",
   "keywords": [
     "piwik",
+    "matomo",
     "analytics",
     "tracking"
   ],
-  "homepage": "https://github.com/fhemberger/piwik-tracker",
-  "bugs": "https://github.com/fhemberger/piwik-tracker/issues",
+  "homepage": "https://github.com/matomo-org/matomo-tracker",
+  "bugs": "https://github.com/matomo-org/matomo-tracker/issues",
   "author": {
     "name": "Frederic Hemberger",
-    "url": "https://github.com/fhemberger"
+    "url": "https://github.com/matomo-org"
   },
   "files": [
     "index.js"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/fhemberger/piwik-tracker.git"
+    "url": "git://github.com/matomo-org/matomo-tracker.git"
   },
   "scripts": {
     "test": "mocha --reporter spec"
