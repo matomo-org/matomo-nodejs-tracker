@@ -10,8 +10,8 @@
 
 const assert = require('assert');
 const events = require('events');
-const util   = require('util');
-const qs     = require('querystring');
+const util = require('util');
+const qs = require('querystring');
 
 
 /**
@@ -20,19 +20,22 @@ const qs     = require('querystring');
  * @param {String} trackerUrl URL of your Matomo instance
  */
 function MatomoTracker (siteId, trackerUrl) {
-  if (!(this instanceof MatomoTracker)) { return new MatomoTracker(siteId, trackerUrl); }
+  if (!(this instanceof MatomoTracker)) {
+    return new MatomoTracker(siteId, trackerUrl);
+  }
   events.EventEmitter.call(this);
 
-  assert.ok(siteId && (typeof siteId == 'number' || typeof siteId == 'string'), 'Matomo siteId required.');
-  assert.ok(trackerUrl && typeof trackerUrl == 'string', 'Matomo tracker URL required, e.g. http://example.com/matomo.php')
-  assert.ok(trackerUrl.endsWith('matomo.php'), 'A tracker URL must end with "matomo.php"')
+  assert.ok(siteId && (typeof siteId === 'number' || typeof siteId === 'string'), 'Matomo siteId required.');
+  assert.ok(trackerUrl && typeof trackerUrl === 'string', 'Matomo tracker URL required, e.g. http://example.com/matomo.php');
+  assert.ok(trackerUrl.endsWith('matomo.php') || trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "matomo.php" or "piwik.php"');
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
 
   // Use either HTTPS or HTTP agent according to Matomo tracker URL
-  this.agent = require( trackerUrl.startsWith('https') ? 'https' : 'http' );
+  this.agent = require(trackerUrl.startsWith('https') ? 'https' : 'http');
 }
+
 util.inherits(MatomoTracker, events.EventEmitter);
 
 
@@ -42,13 +45,15 @@ util.inherits(MatomoTracker, events.EventEmitter);
  * For a list of tracking option parameters see
  * https://developer.matomo.org/api-reference/tracking-api
  *
- * @param {(String|Object)} URL to track or options (must contain URL as well)
+ * @param {(String|Object)} options URL to track or options (must contain URL as well)
  */
 MatomoTracker.prototype.track = function track (options) {
   var hasErrorListeners = this.listeners('error').length;
 
   if (typeof options === 'string') {
-    options = { url: options };
+    options = {
+      url: options
+    };
   }
 
   // Set mandatory options
@@ -60,14 +65,18 @@ MatomoTracker.prototype.track = function track (options) {
 
   var requestUrl = this.trackerUrl + '?' + qs.stringify(options);
   var self = this;
-  var req = this.agent.get(requestUrl, function(res) {
+  var req = this.agent.get(requestUrl, function (res) {
     // Check HTTP statuscode for 200 and 30x
-    if ( !/^(200|30[12478])$/.test(res.statusCode) ) {
-      if (hasErrorListeners) { self.emit('error', res.statusCode); }
+    if (!/^(200|30[12478])$/.test(res.statusCode)) {
+      if (hasErrorListeners) {
+        self.emit('error', res.statusCode);
+      }
     }
   });
 
-  req.on('error', function(err) { hasErrorListeners && self.emit('error', err.message) });
+  req.on('error', function (err) {
+    hasErrorListeners && self.emit('error', err.message);
+  });
 
   req.end();
 };
