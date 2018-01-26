@@ -18,7 +18,7 @@ const qs = require('querystring');
  * @constructor
  * @param {Number} siteId     Id of the site you want to track
  * @param {String} trackerUrl URL of your Matomo instance
- * @param {Boolean} noURLValidation Set to true if the `piwik.php` has been renamed
+ * @param {Boolean} [true] noURLValidation Set to true if the `piwik.php` has been renamed
  */
 function MatomoTracker (siteId, trackerUrl, noURLValidation) {
   if (!(this instanceof MatomoTracker)) {
