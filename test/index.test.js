@@ -37,7 +37,11 @@ describe('MatomoTracker()', () => {
   });
 
   it('should throw if no trackerUrl is not valid (no matomo.php endpoint)', () => {
-    (() => new MatomoTracker(1,'http://example.com/index.php')).should.throw(/tracker/);
+    (() => new MatomoTracker(1, 'http://example.com/index.php')).should.throw(/tracker/);
+  });
+
+  it('should allow invalid URL if noURLValidation is set', () => {
+    (() => new MatomoTracker(1, 'http://example.com/index.php', true)).should.not.throw(/tracker/);
   });
 
   it('should have properties siteId/trackerUrl', () => {

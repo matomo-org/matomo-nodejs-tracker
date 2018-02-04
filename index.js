@@ -18,16 +18,19 @@ const qs = require('querystring');
  * @constructor
  * @param {Number} siteId     Id of the site you want to track
  * @param {String} trackerUrl URL of your Matomo instance
+ * @param {Boolean} [true] noURLValidation Set to true if the `piwik.php` has been renamed
  */
-function MatomoTracker (siteId, trackerUrl) {
+function MatomoTracker (siteId, trackerUrl, noURLValidation) {
   if (!(this instanceof MatomoTracker)) {
-    return new MatomoTracker(siteId, trackerUrl);
+    return new MatomoTracker(siteId, trackerUrl, noURLValidation);
   }
   events.EventEmitter.call(this);
 
   assert.ok(siteId && (typeof siteId === 'number' || typeof siteId === 'string'), 'Matomo siteId required.');
   assert.ok(trackerUrl && typeof trackerUrl === 'string', 'Matomo tracker URL required, e.g. http://example.com/matomo.php');
-  assert.ok(trackerUrl.endsWith('matomo.php') || trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "matomo.php" or "piwik.php"');
+  if (!noURLValidation) {
+    assert.ok(trackerUrl.endsWith('matomo.php') || trackerUrl.endsWith('piwik.php'), 'A tracker URL must end with "matomo.php" or "piwik.php"');
+  }
 
   this.siteId = siteId;
   this.trackerUrl = trackerUrl;
