@@ -127,3 +127,84 @@ describe('#track() - HTTPS support', () => {
     httpsSpy.should.have.been.calledWith('https://example.com/matomo.php?url=http%3A%2F%2Fmywebsite.com%2F&idsite=1&rec=1');
   });
 });
+
+
+describe('#bulkTrack()', () => {
+  var httpMock, httpSpy, matomo;
+
+  var events = [{
+    '_id': 'AA814767-7B1F-5C81-8F1D-8E47AD7D2982',
+    'cdt': '2018-03-22T02:32:22.867Z',
+    'e_c': 'Buy',
+    'e_a': 'rightButton',
+    'e_v': '2'
+  }];
+
+  before(() => {
+    matomo = new MatomoTracker(1, 'http://example.com/matomo.php');
+
+    httpMock = nock('http://example.com')
+      .filteringPath(() => '/matomo.php')
+      .get('/matomo.php');
+    httpSpy = sinon.spy(http, 'get');
+  });
+
+  after(() => {
+    matomo = null;
+    nock.restore();
+    httpSpy.restore();
+  });
+
+  it('should throw without parameter', () => {
+    (() => matomo.trackBulk()).should.throw();
+  });
+
+
+  () => matomo.trackBulk([{}])();
+
+  it('should throw without idsite', () => {
+    matomo.siteId = null;
+    (() => matomo.trackBulk([{}])).should.throw();
+    matomo.siteId = 1;
+  });
+
+  it('should POST to server', () => {
+    httpMock.reply(200);
+    matomo.trackBulk(events, () => {});
+  });
+
+  it('should emit an error if HTTP response status is not 200/30x', (done) => {
+    httpMock.reply(404);
+
+    matomo.on('error', (param) => {
+      param.should.match(/^(404|getaddrinfo ENOTFOUND)/);
+      done();
+    });
+    matomo.trackBulk(events);
+  });
+});
+
+
+describe('#bulkTrack() - HTTPS support', () => {
+  var httpsMock, httpsSpy, matomo;
+
+  before(() => {
+    matomo = new MatomoTracker(1, 'https://127.0.0.1/matomo.php');
+
+    httpsMock = nock('https://127.0.0.1')
+      .filteringPath(() => '/matomo.php')
+      .get('/matomo.php');
+    httpsSpy = sinon.spy(https, 'get');
+  });
+
+  it('should use HTTPS to access matomo, when stated in the URL', () => {
+    httpsMock.reply(200);
+    matomo.track('http://mywebsite.com/');
+  });
+
+  after(() => {
+    matomo = null;
+    nock.restore();
+    httpsSpy.restore();
+  });
+});

@@ -36,6 +36,24 @@ matomo.track({
     '1': ['custom variable name', 'custom variable value']
   })
 });
+
+// … or trackBulk:
+var events = [{
+  '_id': 'AA814767-7B1F-5C81-8F1D-8E47AD7D2982',
+  'cdt': '2018-03-22T02:32:22.867Z',
+  'e_c': 'Buy',
+  'e_a': 'rightButton',
+  'e_v': '2'
+},{
+  '_id': 'AA814767-7B1F-5C81-8F1D-8E47AD7D2982',
+  'cdt': '2018-03-22T02:33:52.962Z',
+  'e_c': 'Buy',
+  'e_a': 'leftButton',
+  'e_v': '4'
+}];
+matomo.track(events, (resData) => {
+  // done.
+})
 ```
 
 That's it. For a complete list of options, see [Matomo's Tracking HTTP API Reference](https://developer.matomo.org/api-reference/tracking-api).
