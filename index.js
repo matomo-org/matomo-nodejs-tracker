@@ -12,6 +12,7 @@ const assert = require('assert');
 const events = require('events');
 const util = require('util');
 const qs = require('querystring');
+const url = require('url');
 
 
 /**
@@ -84,5 +85,61 @@ MatomoTracker.prototype.track = function track (options) {
   req.end();
 };
 
+
+MatomoTracker.prototype.trackBulk = function trackBulk (events, callback) {
+  var hasErrorListeners = this.listeners('error').length;
+
+  assert.ok(events && (events.length > 0), 'Events require at least one.');
+  assert.ok(this.siteId !== undefined && this.siteId !== null, 'siteId must be specified.');
+
+  var body = JSON.stringify({
+    requests: events.map(query => {
+      query.idsite = this.siteId;
+      query.rec = 1;
+      return '?' + qs.stringify(query);
+    })
+  });
+
+  var uri = url.parse(this.trackerUrl);
+
+  const requestOptions = {
+    protocol: uri.protocol,
+    hostname: uri.hostname,
+    port: uri.port,
+    path: uri.path,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+    }
+  };
+
+  const req = this.agent.request(requestOptions, res => {
+    if (!/^(200|30[12478])$/.test(res.statusCode)) {
+      if (hasErrorListeners) {
+        this.emit('error', res.statusCode);
+      }
+    }
+
+    let data = [];
+
+    res.on('data', chunk => {
+      data.push(chunk);
+    });
+
+    res.on('end', () => {
+      data = Buffer.concat(data).toString();
+      typeof callback === 'function' && callback(data);
+    });
+  });
+
+  req.on('error', (err) => {
+      hasErrorListeners && this.emit('error', err.message);
+    }
+  );
+
+  req.write(body);
+  req.end();
+};
 
 module.exports = MatomoTracker;
