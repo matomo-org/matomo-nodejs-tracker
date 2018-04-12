@@ -51,7 +51,7 @@ var events = [{
   'e_a': 'leftButton',
   'e_v': '4'
 }];
-matomo.track(events, (resData) => {
+matomo.trackBulk(events, (resData) => {
   // done.
 })
 ```

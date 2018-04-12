@@ -140,6 +140,6 @@ MatomoTracker.prototype.trackBulk = function trackBulk (events, callback) {
 
   req.write(body);
   req.end();
-}
+};
 
 module.exports = MatomoTracker;
