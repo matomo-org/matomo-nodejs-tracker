@@ -1,6 +1,6 @@
 /**
  * A Node.js wrapper for the Matomo (http://matomo.org) tracking HTTP API
- * https://github.com/matomo-org/matomo-tracker
+ * https://github.com/matomo-org/matomo-nodejs-tracker
  *
  * @author  Frederic Hemberger, Matomo Team
  * @license MIT
