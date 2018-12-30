@@ -27,12 +27,12 @@
     "eslint": "eslint --max-warnings=0 index.js test/index.test.js"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.19.1",
-    "mocha": "^5.0.5",
-    "nock": "^9.2.5",
-    "sinon": "^4.5.0",
-    "sinon-chai": "^3.0.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.11.1",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.5",
+    "sinon": "^7.2.2",
+    "sinon-chai": "^3.3.0"
   },
   "engines": {
     "node": ">=4.2.0"
