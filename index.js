@@ -115,7 +115,7 @@ MatomoTracker.prototype.trackBulk = function trackBulk (events, callback) {
   };
 
   const req = this.agent.request(requestOptions, res => {
-    if (!/^(200|30[12478])$/.test(res.statusCode)) {
+    if (!/^(20[04]|30[12478])$/.test(res.statusCode)) {
       if (hasErrorListeners) {
         this.emit('error', res.statusCode);
       }
