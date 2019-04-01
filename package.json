@@ -1,6 +1,6 @@
 {
   "name": "matomo-tracker",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A wrapper for the Matomo tracking HTTP API",
   "keywords": [
     "piwik",
