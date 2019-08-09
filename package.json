@@ -28,10 +28,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "mocha": "^6.0.2",
+    "eslint": "^6.1.0",
+    "mocha": "^6.2.0",
     "nock": "^10.0.6",
-    "sinon": "^7.3.1",
+    "sinon": "^7.4.1",
     "sinon-chai": "^3.3.0"
   },
   "engines": {
