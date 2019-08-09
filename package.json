@@ -8,8 +8,8 @@
     "analytics",
     "tracking"
   ],
-  "homepage": "https://github.com/matomo-org/matomo-tracker",
-  "bugs": "https://github.com/matomo-org/matomo-tracker/issues",
+  "homepage": "https://github.com/matomo-org/matomo-nodejs-tracker",
+  "bugs": "https://github.com/matomo-org/matomo-nodejs-tracker/issues",
   "author": {
     "name": "Frederic Hemberger",
     "url": "https://github.com/matomo-org"
