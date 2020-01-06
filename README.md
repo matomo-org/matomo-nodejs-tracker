@@ -58,6 +58,21 @@ matomo.trackBulk(events, (resData) => {
 
 That's it. For a complete list of options, see [Matomo's Tracking HTTP API Reference](https://developer.matomo.org/api-reference/tracking-api).
 
+## Advanced usage
+
+If you renamed the tracking file `piwik.php` or `matomo.php` of your matomo instance, the following error will be thrown:
+
+```js
+new MatomoTracker(1, 'http://matomo.my-site.com/my-file.php'))
+// ERROR: A tracker URL must end with "matomo.php" or "piwik.php"
+```
+
+To skip this check, simply pass `true` as third argument to the constructor:
+
+```js
+new MatomoTracker(1, 'http://matomo.my-site.com/my-file.php', true))
+// OK
+```
 
 ## License
 
