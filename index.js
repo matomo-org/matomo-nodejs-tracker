@@ -71,7 +71,7 @@ MatomoTracker.prototype.track = function track (options) {
   var self = this;
   var req = this.agent.get(requestUrl, function (res) {
     // Check HTTP statuscode for 200 and 30x
-    if (!/^(200|30[12478])$/.test(res.statusCode)) {
+    if (!/^(20[04]|30[12478])$/.test(res.statusCode)) {
       if (hasErrorListeners) {
         self.emit('error', res.statusCode);
       }
