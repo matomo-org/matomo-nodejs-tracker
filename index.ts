@@ -175,7 +175,8 @@ interface MatomoSingleTrackOptions extends MatomoTrackOptions {
 
 
 interface MatomoTrackOptions {
-  [key: string]: number|string|undefined
+  [key: string]: number | string | undefined
+
   idsite?: number
   rec?: 1
 
@@ -183,7 +184,7 @@ interface MatomoTrackOptions {
   action_name?: string;
   _id?: string;
   rand?: string;
-  apiv?: number;
+  apiv?: 1;
 
   // Optional User info
   urlref?: string;
@@ -197,6 +198,14 @@ interface MatomoTrackOptions {
   h?: number;
   m?: number;
   s?: number;
+  fla?: 1;
+  java?: 1;
+  dir?: 1;
+  qt?: 1;
+  pdf?: 1;
+  wma?: 1;
+  ag?: 1;
+  cookie?: 1;
   ua?: string;
   lang?: string;
   uid?: string;
@@ -210,10 +219,12 @@ interface MatomoTrackOptions {
   search?: string;
   search_cat?: string;
   search_count?: number;
+  pv_id?: string;
   idgoal?: number;
   revenue?: number;
   gt_ms?: number;
   cs?: string;
+  ca?: 1;
 
   // Optional Event Tracking info
   e_c?: string;
@@ -246,6 +257,26 @@ interface MatomoTrackOptions {
   lat?: string;
   long?: string;
 
+  // Optional Media Analytics parameters
+  ma_id?: string;
+  ma_ti?: string;
+  ma_re?: string;
+  ma_mt?: "video" | "audio";
+  ma_pn?: string;
+  ma_sn?: number;
+  ma_le?: number;
+  ma_ps?: number;
+  ma_ttp?: number;
+  ma_w?: number;
+  ma_h?: number;
+  ma_fs?: 1 | 0;
+  ma_se?: string;
+
+  // Optional Queued Tracking parameters
+  queuedtracking?: 0
+
   // Other parameters
-  send_image?: number;
+  send_image?: 0;
+  ping?: 1;
+  bots?: 1;
 }
