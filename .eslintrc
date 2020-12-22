@@ -1,4 +1,12 @@
 {
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended"
+  ],
   "env": {
     "node": true,
     "es6": true
@@ -15,7 +23,8 @@
     "no-trailing-spaces": 1,
     "no-underscore-dangle": 0,
     "no-unused-vars": 1,
-    "space-before-function-paren": [1, "always"],
+    "space-before-function-paren": [1, "never"],
+    "@typescript-eslint/no-this-alias": "off",
     "semi": "warn"
   }
 }
