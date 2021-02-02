@@ -15,8 +15,10 @@
     "url": "https://github.com/matomo-org"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/matomo-org/matomo-nodejs-tracker.git"
