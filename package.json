@@ -24,7 +24,7 @@
     "url": "git://github.com/matomo-org/matomo-nodejs-tracker.git"
   },
   "scripts": {
-    "build": "tsc index.ts",
+    "build": "tsc",
     "test": "npm run build && npm run mocha && npm run eslint",
     "mocha": "mocha --reporter spec --exit",
     "eslint": "eslint --max-warnings=0 index.ts"
