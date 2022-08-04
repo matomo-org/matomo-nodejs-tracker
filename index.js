@@ -11,9 +11,6 @@
 const assert = require('assert');
 const events = require('events');
 const util = require('util');
-const qs = require('querystring');
-const url = require('url');
-
 
 /**
  * @constructor
@@ -52,7 +49,7 @@ util.inherits(MatomoTracker, events.EventEmitter);
  * @param {(String|Object)} options URL to track or options (must contain URL as well)
  */
 MatomoTracker.prototype.track = function track (options) {
-  var hasErrorListeners = this.listeners('error').length;
+  const hasErrorListeners = this.listeners('error').length;
 
   if (typeof options === 'string') {
     options = {
@@ -67,9 +64,9 @@ MatomoTracker.prototype.track = function track (options) {
 
   assert.ok(options.url, 'URL to be tracked must be specified.');
 
-  var requestUrl = this.trackerUrl + '?' + qs.stringify(options);
-  var self = this;
-  var req = this.agent.get(requestUrl, function (res) {
+  const requestUrl = this.trackerUrl + '?' + new URLSearchParams(options).toString();
+  const self = this;
+  const req = this.agent.get(requestUrl, function (res) {
     // Check HTTP statuscode for 200 and 30x
     if (!/^(20[04]|30[12478])$/.test(res.statusCode)) {
       if (hasErrorListeners) {
@@ -86,27 +83,27 @@ MatomoTracker.prototype.track = function track (options) {
 };
 
 
-MatomoTracker.prototype.trackBulk = function trackBulk (events, callback) {
-  var hasErrorListeners = this.listeners('error').length;
+MatomoTracker.prototype.trackBulk = function trackBulk (eventsObj, callback) {
+  const hasErrorListeners = this.listeners('error').length;
 
-  assert.ok(events && (events.length > 0), 'Events require at least one.');
+  assert.ok(eventsObj && (eventsObj.length > 0), 'Events require at least one.');
   assert.ok(this.siteId !== undefined && this.siteId !== null, 'siteId must be specified.');
 
-  var body = JSON.stringify({
-    requests: events.map(query => {
+  const body = JSON.stringify({
+    requests: eventsobj.map(query => {
       query.idsite = this.siteId;
       query.rec = 1;
-      return '?' + qs.stringify(query);
+      return '?' + new URLSearchParams(query).toString();
     })
   });
 
-  var uri = url.parse(this.trackerUrl);
+  const uri = new URL(this.trackerUrl);
 
   const requestOptions = {
     protocol: uri.protocol,
     hostname: uri.hostname,
     port: uri.port,
-    path: uri.path,
+    path: uri.pathname,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
