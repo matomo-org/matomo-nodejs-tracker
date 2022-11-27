@@ -23,7 +23,7 @@ import * as url from "url";
  * @param {String} trackerUrl URL of your Matomo instance
  * @param {Boolean} [noURLValidation]  Set to true if the `piwik.php` or `matomo.php` has been renamed
  */
-export class MatomoTracker extends events.EventEmitter {
+export default class MatomoTracker extends events.EventEmitter {
   private readonly siteId: number;
   private readonly trackerUrl: string;
   private readonly usesHTTPS: boolean;
@@ -166,8 +166,6 @@ export class MatomoTracker extends events.EventEmitter {
     req.end();
   }
 }
-
-module.exports = MatomoTracker;
 
 interface MatomoSingleTrackOptions extends MatomoTrackOptions {
   url: string;
